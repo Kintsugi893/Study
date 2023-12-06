@@ -8,7 +8,7 @@ using namespace std;
 
 int main() 
 {
-    // Русский язык
+    // Р СѓСЃСЃРєРёР№ СЏР·С‹Рє
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
 
@@ -17,17 +17,17 @@ int main()
     string text;
     char symbol;
 
-    // Считывание текста из файла
+    // РЎС‡РёС‚С‹РІР°РЅРёРµ С‚РµРєСЃС‚Р° РёР· С„Р°Р№Р»Р°
     while (inputFile.get(symbol))
         text += symbol;
 
-    // Поиск количества слов в тексте
+    // РџРѕРёСЃРє РєРѕР»РёС‡РµСЃС‚РІР° СЃР»РѕРІ РІ С‚РµРєСЃС‚Рµ
     int countWords = 1;
     for (size_t i = 0; text[i] != '\0'; ++i)
         if (text[i] == ' ')
             countWords++;
 
-    // Заполнение массива слов
+    // Р—Р°РїРѕР»РЅРµРЅРёРµ РјР°СЃСЃРёРІР° СЃР»РѕРІ
     string* words = new string[countWords];
     for (size_t i = 0, j = 0; i < countWords; ++i, ++j)
     {
@@ -38,22 +38,22 @@ int main()
 
     int countLetters[COUNT_LETTERS] {0};
 
-    // Проходим по каждому слову и считаем кол-во каждой буквы
+    // РџСЂРѕС…РѕРґРёРј РїРѕ РєР°Р¶РґРѕРјСѓ СЃР»РѕРІСѓ Рё СЃС‡РёС‚Р°РµРј РєРѕР»-РІРѕ РєР°Р¶РґРѕР№ Р±СѓРєРІС‹
     for (size_t i = 0; i < countWords; ++i)
     {
         for (size_t j = 0; j < words[i].length(); ++j)
         {
             char letter = words[i][j];
 
-            if (letter >= 'А' && letter <= 'Я')
+            if (letter >= 'Рђ' && letter <= 'РЇ')
                 letter += COUNT_LETTERS - 1;
 
-            if (letter >= 'а' && letter <= 'я')
-                countLetters[letter - 'а'] += 1;
+            if (letter >= 'Р°' && letter <= 'СЏ')
+                countLetters[letter - 'Р°'] += 1;
         }
     }
 
-    // Поиск 4 наиболее встречающихся букв текста
+    // РџРѕРёСЃРє 4 РЅР°РёР±РѕР»РµРµ РІСЃС‚СЂРµС‡Р°СЋС‰РёС…СЃСЏ Р±СѓРєРІ С‚РµРєСЃС‚Р°
     int indexesMax[4]{ 0 };
     for (size_t count = 0; count < 4; ++count)
     {
@@ -71,10 +71,10 @@ int main()
 
     string maxLetters;
     for (size_t i = 0; i < 4; ++i) {
-        maxLetters += indexesMax[i] + 'а';
+        maxLetters += indexesMax[i] + 'Р°';
     }
 
-    // Вставка к словам с 2-мя такими буквами кол-во букв в скобках
+    // Р’СЃС‚Р°РІРєР° Рє СЃР»РѕРІР°Рј СЃ 2-РјСЏ С‚Р°РєРёРјРё Р±СѓРєРІР°РјРё РєРѕР»-РІРѕ Р±СѓРєРІ РІ СЃРєРѕР±РєР°С…
     for (size_t i = 0; i < countWords; ++i)
     {
         string word = words[i];
@@ -101,7 +101,7 @@ int main()
                         countExist += 1;
                         first = word[j];
                     }
-                    //else if (word[j] == first && j == indexLetter1 + 1) // пропускаем, если одна буква идет подряд
+                    //else if (word[j] == first && j == indexLetter1 + 1) // РїСЂРѕРїСѓСЃРєР°РµРј, РµСЃР»Рё РѕРґРЅР° Р±СѓРєРІР° РёРґРµС‚ РїРѕРґСЂСЏРґ
                     //{
                     //    continue;
                     //}
