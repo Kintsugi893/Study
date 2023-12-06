@@ -2,11 +2,11 @@
 #include <fstream>
 #include <windows.h>
 
-//есть баг, если присутствует новые строки, то код не видит, что находится после них
+//РµСЃС‚СЊ Р±Р°Рі, РµСЃР»Рё РїСЂРёСЃСѓС‚СЃС‚РІСѓРµС‚ РЅРѕРІС‹Рµ СЃС‚СЂРѕРєРё, С‚Рѕ РєРѕРґ РЅРµ РІРёРґРёС‚, С‡С‚Рѕ РЅР°С…РѕРґРёС‚СЃСЏ РїРѕСЃР»Рµ РЅРёС…
 
 int main()
 {
-    // Русский язык
+    // Р СѓСЃСЃРєРёР№ СЏР·С‹Рє
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
 
@@ -19,7 +19,7 @@ int main()
         text += symbol;
     }
 
-    // Поиск количества слов в тексте
+    // РџРѕРёСЃРє РєРѕР»РёС‡РµСЃС‚РІР° СЃР»РѕРІ РІ С‚РµРєСЃС‚Рµ
     int countWords = 1;
     for (size_t i = 0; text[i] != '\0'; ++i)
         if (text[i] == ' ')
@@ -27,9 +27,9 @@ int main()
 
     std::string word;
     std::string result;
-    std::string vowels = "аеёиоуыэюяАЕЁИОУЫЭЮЯ";
+    std::string vowels = "Р°РµС‘РёРѕСѓС‹СЌСЋСЏРђР•РЃРРћРЈР«Р­Р®РЇ";
 
-    // Заполнение массива слов
+    // Р—Р°РїРѕР»РЅРµРЅРёРµ РјР°СЃСЃРёРІР° СЃР»РѕРІ
     std::string* words = new std::string[countWords];
     int* countVowels = new int[countWords] {0};
     for (size_t i = 0, j = 0; i < countWords; ++i, ++j)
@@ -37,14 +37,14 @@ int main()
         words[i] = "";
         for (; text[j] != ' ' && text[j] != '\0' && text[j] != '\n';  ++j)
         {
-            if (text[j] >= 'А' && text[j] <= 'Я')
-                text[j] += ('а' - 'А');
+            if (text[j] >= 'Рђ' && text[j] <= 'РЇ')
+                text[j] += ('Р°' - 'Рђ');
 
-            // Обработка буквы ё
+            // РћР±СЂР°Р±РѕС‚РєР° Р±СѓРєРІС‹ С‘
             if (text[j] == -88)
                 text[j] += 16;
 
-            if (text[j] >= 'а' && text[j] <= 'я' || text[j] <= 'ё' ||  text[j] == '-')
+            if (text[j] >= 'Р°' && text[j] <= 'СЏ' || text[j] <= 'С‘' ||  text[j] == '-')
                 words[i] += text[j];
         }
     }
@@ -52,13 +52,13 @@ int main()
     int maxVowelCount = 0;
     bool hasPalindrome = false;
 
-    // Проходим по каждому слову
+    // РџСЂРѕС…РѕРґРёРј РїРѕ РєР°Р¶РґРѕРјСѓ СЃР»РѕРІСѓ
     for (size_t i = 0; i < countWords; ++i)
     {
         bool isPalindrom = true;
         if (words[i].length() > 1)
         {
-            // Проверка на палиндром
+            // РџСЂРѕРІРµСЂРєР° РЅР° РїР°Р»РёРЅРґСЂРѕРј
             size_t left = 0;
             size_t right = words[i].length() - 1;
             while (left < right)
@@ -85,10 +85,10 @@ int main()
         }
     }
 
-    // Вывод результата
+    // Р’С‹РІРѕРґ СЂРµР·СѓР»СЊС‚Р°С‚Р°
     if (hasPalindrome)
     {
-        // Сортировка слов по убыванию количества гласных
+        // РЎРѕСЂС‚РёСЂРѕРІРєР° СЃР»РѕРІ РїРѕ СѓР±С‹РІР°РЅРёСЋ РєРѕР»РёС‡РµСЃС‚РІР° РіР»Р°СЃРЅС‹С…
         for (size_t i = 0; i < countWords - 1; ++i)
             for (size_t j = 0; j < countWords - i - 1; ++j)
                 if (countVowels[j] < countVowels[j + 1])
@@ -109,7 +109,7 @@ int main()
     }
     else
     {
-        // Сортировка в алфавитном порядке
+        // РЎРѕСЂС‚РёСЂРѕРІРєР° РІ Р°Р»С„Р°РІРёС‚РЅРѕРј РїРѕСЂСЏРґРєРµ
         for (int i = 0; i < countWords - 1; ++i)
         {
             for (int j = 0; j < countWords - i - 1; ++j)
