@@ -3,7 +3,7 @@
 #include <fstream>
 
 namespace MatrixOperations {
-    // Реализация вычисления квадратного корня без использования cmath
+    // Р РµР°Р»РёР·Р°С†РёСЏ РІС‹С‡РёСЃР»РµРЅРёСЏ РєРІР°РґСЂР°С‚РЅРѕРіРѕ РєРѕСЂРЅСЏ
     double mySqrt(int num) {
         if (num <= 1) return 0;
         double x = num;
