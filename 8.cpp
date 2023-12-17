@@ -1,6 +1,6 @@
 #include <iostream>
 
-// Структура для представления узла списка
+// РЎС‚СЂСѓРєС‚СѓСЂР° РґР»СЏ РїСЂРµРґСЃС‚Р°РІР»РµРЅРёСЏ СѓР·Р»Р° СЃРїРёСЃРєР°
 struct Node {
     int data;
     Node* next;
@@ -8,12 +8,12 @@ struct Node {
     Node(int value) : data(value), next(nullptr) {}
 };
 
-// Функция для ввода последовательности и создания списка
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ РІРІРѕРґР° РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚Рё Рё СЃРѕР·РґР°РЅРёСЏ СЃРїРёСЃРєР°
 Node* inputSequence() {
     Node* head = nullptr;
     Node* tail = nullptr;
 
-    std::cout << "Введите последовательность натуральных чисел (введите 0 для завершения ввода): ";
+    std::cout << "Р’РІРµРґРёС‚Рµ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚СЊ РЅР°С‚СѓСЂР°Р»СЊРЅС‹С… С‡РёСЃРµР» (РІРІРµРґРёС‚Рµ 0 РґР»СЏ Р·Р°РІРµСЂС€РµРЅРёСЏ РІРІРѕРґР°): ";
     int value;
     while (true) {
         std::cin >> value;
@@ -34,7 +34,7 @@ Node* inputSequence() {
     return head;
 }
 
-// Функция для проверки упорядоченности списка по неубыванию или по невозрастанию
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ РїСЂРѕРІРµСЂРєРё СѓРїРѕСЂСЏРґРѕС‡РµРЅРЅРѕСЃС‚Рё СЃРїРёСЃРєР° РїРѕ РЅРµСѓР±С‹РІР°РЅРёСЋ РёР»Рё РїРѕ РЅРµРІРѕР·СЂР°СЃС‚Р°РЅРёСЋ
 bool isOrdered(Node* head, bool increasing) {
     while (head != nullptr && head->next != nullptr) {
         if ((increasing && head->data > head->next->data) || (!increasing && head->data < head->next->data)) {
@@ -45,23 +45,36 @@ bool isOrdered(Node* head, bool increasing) {
     return true;
 }
 
-// Функция для удаления чисел, в которые входят цифры 2 и 8
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ СѓРґР°Р»РµРЅРёСЏ С‡РёСЃРµР», РІ РєРѕС‚РѕСЂС‹Рµ РІС…РѕРґСЏС‚ С†РёС„СЂС‹ 2 Рё 8
 void removeNumbers(Node*& head) {
     Node* current = head;
     Node* prev = nullptr;
+    bool hasTwo = false;
+    bool hasEight = false;
 
     while (current != nullptr) {
         int number = current->data;
 
+        int tempNumber = number; //РџСЂРѕРІРµСЂРєР° РЅР° РЅР°Р»РёС‡РёРµ 2 Рё 8 РѕРґРЅРѕРІСЂРµРјРµРЅРЅРѕ РІ С‡РёСЃР»Рµ
+        while (tempNumber != 0) {
+            if (tempNumber % 10 == 2)
+                hasTwo = true;
+            else if (tempNumber % 10 == 8)
+                hasEight = true;
+            tempNumber /= 10;
+        }
+
         if (number % 10 == 5) {
-            // Дублирование чисел, заканчивающихся цифрой 5
+            // Р”СѓР±Р»РёСЂРѕРІР°РЅРёРµ С‡РёСЃРµР», Р·Р°РєР°РЅС‡РёРІР°СЋС‰РёС…СЃСЏ С†РёС„СЂРѕР№ 5
             Node* duplicate = new Node(number);
             duplicate->next = current->next;
             current->next = duplicate;
             current = duplicate->next;
         }
-        else if ((number % 10 == 2 || number % 10 == 8) && number >= 10) {
-            // Удаление чисел, в которые входят цифры 2 и 8
+
+
+        else if (hasTwo && hasEight) {
+            // РЈРґР°Р»РµРЅРёРµ С‡РёСЃРµР», РІ РєРѕС‚РѕСЂС‹Рµ РІС…РѕРґСЏС‚ С†РёС„СЂС‹ 2 Рё 8
             if (prev == nullptr) {
                 head = current->next;
             }
@@ -79,7 +92,7 @@ void removeNumbers(Node*& head) {
     }
 }
 
-// Функция для упорядочивания списка по неубыванию
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ СѓРїРѕСЂСЏРґРѕС‡РёРІР°РЅРёСЏ СЃРїРёСЃРєР° РїРѕ РЅРµСѓР±С‹РІР°РЅРёСЋ
 void sortList(Node*& head) {
     if (head == nullptr || head->next == nullptr) {
         return;
@@ -112,7 +125,7 @@ void sortList(Node*& head) {
     head = sorted;
 }
 
-// Функция для вывода списка
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ РІС‹РІРѕРґР° СЃРїРёСЃРєР°
 void printList(Node* head) {
     while (head != nullptr) {
         std::cout << head->data << " ";
@@ -121,7 +134,7 @@ void printList(Node* head) {
     std::cout << std::endl;
 }
 
-// Основная функция
+// РћСЃРЅРѕРІРЅР°СЏ С„СѓРЅРєС†РёСЏ
 int main() {
     setlocale(LC_ALL, "ru");
     Node* sequence = inputSequence();
@@ -133,10 +146,10 @@ int main() {
         sortList(sequence);
     }
 
-    std::cout << "Результат: ";
+    std::cout << "Р РµР·СѓР»СЊС‚Р°С‚: ";
     printList(sequence);
 
-    // Освобождаем память
+    // РћСЃРІРѕР±РѕР¶РґР°РµРј РїР°РјСЏС‚СЊ
     Node* current = sequence;
     while (current != nullptr) {
         Node* temp = current;
