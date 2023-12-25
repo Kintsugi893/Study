@@ -1,5 +1,7 @@
 #include <iostream>
+#include <string>
 
+// Структура для представления узла списка
 struct Node {
     int data;
     Node* next;
@@ -7,6 +9,7 @@ struct Node {
     Node(int value) : data(value), next(nullptr) {}
 };
 
+// Функция для ввода последовательности и создания списка
 Node* inputSequence() {
     Node* head = nullptr;
     Node* tail = nullptr;
@@ -32,6 +35,7 @@ Node* inputSequence() {
     return head;
 }
 
+// Функция для проверки упорядоченности списка по неубыванию или по невозрастанию
 bool isOrdered(Node* head, bool increasing) {
     while (head != nullptr && head->next != nullptr) {
         if ((increasing && head->data > head->next->data) || (!increasing && head->data < head->next->data)) {
@@ -42,30 +46,32 @@ bool isOrdered(Node* head, bool increasing) {
     return true;
 }
 
-void removeNumbersAndDuplicate(Node*& head) {
+// Функция для удаления чисел, в которые входят цифры 2 и 8
+void removeNumbersWithTwoAndEight(Node*& head) {
     Node* current = head;
     Node* prev = nullptr;
 
     while (current != nullptr) {
-        int number = current->data;
+        // Преобразование числа в строку для проверки наличия '2' и '8'
+        std::string numStr = std::to_string(current->data);
 
-        if ((number % 10 == 2 || number % 10 == 8) && (number / 10 % 10 == 2 || number / 10 % 10 == 8)) {
-            Node* temp = current;
+        // Проверка, содержит ли строка '2' и '8'
+        if (numStr.find('2') != std::string::npos && numStr.find('8') != std::string::npos) {
+            //if (current->data % 10 == 5) {
+            //    return;
+            //}
+            
+            // Удаление узла из списка
             if (prev == nullptr) {
                 head = current->next;
-                current = current->next;
+                delete current;
+                current = head;
             }
             else {
                 prev->next = current->next;
-                current = current->next;
+                delete current;
+                current = prev->next;
             }
-            delete temp;
-        }
-        else if (number % 10 == 5) {
-            Node* duplicate = new Node(number);
-            duplicate->next = current->next;
-            current->next = duplicate;
-            current = duplicate->next;
         }
         else {
             prev = current;
@@ -74,6 +80,26 @@ void removeNumbersAndDuplicate(Node*& head) {
     }
 }
 
+// Функция для дублирования чисел, оканчивающихся на 5
+void duplicateNumbersEndingWithFive(Node*& head) {
+    Node* current = head;
+
+    while (current != nullptr) {
+        // Проверка, оканчивается ли число на 5
+        if (current->data % 10 == 5) {
+            // Дублирование узла
+            Node* newNode = new Node(current->data);
+            newNode->next = current->next;
+            current->next = newNode;
+            current = newNode->next;
+        }
+        else {
+            current = current->next;
+        }
+    }
+}
+
+// Функция для упорядочивания списка по неубыванию
 void sortList(Node*& head) {
     if (head == nullptr || head->next == nullptr) {
         return;
@@ -106,6 +132,7 @@ void sortList(Node*& head) {
     head = sorted;
 }
 
+// Функция для вывода списка
 void printList(Node* head) {
     while (head != nullptr) {
         std::cout << head->data << " ";
@@ -114,12 +141,14 @@ void printList(Node* head) {
     std::cout << std::endl;
 }
 
+// Основная функция
 int main() {
     setlocale(LC_ALL, "ru");
     Node* sequence = inputSequence();
 
     if (isOrdered(sequence, true) || isOrdered(sequence, false)) {
-        removeNumbersAndDuplicate(sequence);
+        duplicateNumbersEndingWithFive(sequence);
+        removeNumbersWithTwoAndEight(sequence);
     }
     else {
         sortList(sequence);
